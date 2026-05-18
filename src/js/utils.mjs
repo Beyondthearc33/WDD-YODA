@@ -28,9 +28,9 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
-export function renderWithTemplate(templateFn, parentElement, data, callback, position="afterbegin", clear=true) {
+export async function renderWithTemplate(templateFn, parentElement, data, callback, position="afterbegin", clear=true) {
     // get template using function...no need to loop this time.
-    const template =templateFn(data);
+    const template = await templateFn(data);
     if (clear) {
         parentElement.innerHTML = "";
     }
@@ -53,6 +53,8 @@ export function loadTemplate(path) {
 export async function loadHeaderFooter() {
     const headerTemplateFn = loadTemplate("/partials/header.html");
     const footerTemplateFn = loadTemplate("/partials/footer.html");
-    await renderWithTemplate(headerTemplateFn, qs("#main-header"));
-    await renderWithTemplate(footerTemplateFn, qs("#footer"));
+    const headerEl = document.querySelector("#main-header");
+    const footerEl = document.querySelector("#main-footer");
+    await renderWithTemplate(headerTemplateFn, headerEl);
+    await renderWithTemplate(footerTemplateFn, footerEl);
 }

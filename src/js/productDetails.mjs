@@ -12,7 +12,18 @@ export default async function productDetails(productId) {
   document.getElementById("addToCart").addEventListener("click", addToCart);
 }
 function addToCart() {
-  setLocalStorage("so-cart", product);
+  let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
+
+  if (!cart) {
+    cart = [];
+  }
+
+  if (!Array.isArray(cart)) {
+    cart = [];
+  }
+
+  cart.push(product);
+  setLocalStorage("so-cart", cart);
 }
 function renderProductDetails() {
   document.querySelector("#productName").innerText = product.Brand.Name;

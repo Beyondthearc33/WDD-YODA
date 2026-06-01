@@ -4,7 +4,7 @@ function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${item.Images.PrimarySmall}"
       alt="${item.Name}"
     />
   </a>
@@ -26,4 +26,13 @@ function cartListTemplate(cartItems) {
 export default function shoppingCart(parentElement) {
   const cartItems = getLocalStorage("so-cart") || [];
   renderWithTemplate(cartListTemplate, parentElement, cartItems);
+
+  if (cartItems.length > 0) {
+    document.querySelector(".list-footer").classList.remove("hide");
+    const total = cartItems.reduce((acc, product) => acc + product.FinalPrice, 0);
+    document.querySelector(".list-total").textContent = `Total: $${total}`;
+  }
+  else {
+    document.querySelector(".list-footer").classList.add("hide");
+  }
 }

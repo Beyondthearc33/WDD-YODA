@@ -189,6 +189,30 @@ button {
   color: var(--dark-grey);
 }
 
+#checkout-form {
+  width: 375px;
+  margin: 0 auto;
+}
+
+#checkout-form fieldset {
+  border: 2px solid #777;
+}
+
+#checkout-form input {
+  width: 100%;
+  padding: 5px;
+}
+
+.order-summary > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-summary > div p {
+  margin: 10px 0;
+}
+
 /* Styles for product lists */
 .product-card {
   flex: 1 1 45%;

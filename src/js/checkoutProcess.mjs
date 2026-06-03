@@ -1,4 +1,5 @@
 import { getLocalStorage } from "./utils.mjs";
+import { checkout } from "./externalServices.mjs";
 
 function calculateShipping(acc, _, i) {
   if (i === 0) {
@@ -6,6 +7,30 @@ function calculateShipping(acc, _, i) {
   }
   return acc + 2;
 };
+
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+
+  formData.forEach((value, key) => convertedJSON[key] = value);
+
+  return convertedJSON;
+}
+
+// takes the items currently stored in the cart (localstorage) and returns them in a simplified form.
+function packageItems(items) {
+// convert the list of products from localStorage to the simpler form required for the checkout process. Array.map would be perfect for this.
+  const list = items.map(item => {
+    return {
+      id: item.Id,
+      name: item.Name,
+      price: item.FinalPrice,
+      quantity: 1,
+    };
+  });
+
+  return list;
+}
 
 const checkoutProcess = {
   key: "",
@@ -51,7 +76,21 @@ const checkoutProcess = {
     document.querySelector("#tax").textContent = "$" + this.tax.toFixed(2);
     document.querySelector("#shipping").textContent = "$" + this.shipping.toFixed(2);
     document.querySelector("#orderTotal").textContent = "$" + this.orderTotal.toFixed(2);
-  }
+  },
   
+  checkout: async function(form) {
+    // build the data object from the calculated fields, the items in the cart, and the information entered into the form
+    const order = formDataToJSON(form);
+    const items = getLocalStorage("so-cart");
+    order.items = packageItems(items);
+    order.orderDate = new Date().toISOString();
+    order.orderTotal = this.orderTotal;
+    order.tax = this.tax;
+    order.shipping = this.shipping;
+    // call the checkout method in our externalServices module and send it our data object.
+    const res = await checkout(order);
+    console.log(res);
+  }
 }
+
 export default checkoutProcess;

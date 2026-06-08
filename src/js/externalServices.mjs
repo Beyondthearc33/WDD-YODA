@@ -5,7 +5,7 @@ async function convertToJson(res) {
   if (res.ok) {
     return json;
   } else {
-    throw { name: 'servicesError', message: json };
+    throw { name: "servicesError", message: json };
   }
 }
 

@@ -83,8 +83,8 @@ const checkoutProcess = {
   checkout: async function (form) {
     // build the data object from the calculated fields, the items in the cart, and the information entered into the form
     const order = formDataToJSON(form);
-    const items = getLocalStorage("so-cart");
-    order.items = packageItems(items);
+
+    order.items = packageItems(this.list);
     order.orderDate = new Date().toISOString();
     order.orderTotal = this.orderTotal;
     order.tax = this.tax;

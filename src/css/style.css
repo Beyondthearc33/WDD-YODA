@@ -132,7 +132,9 @@ button {
   margin: 0;
   font-size: 1.2em;
 }
-
+.success-message {
+  text-align: center;
+}
 .product-grid a {
   text-decoration: none;
 }

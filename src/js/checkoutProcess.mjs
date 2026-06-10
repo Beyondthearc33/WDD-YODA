@@ -93,6 +93,9 @@ const checkoutProcess = {
     try {
       const res = await checkout(order);
       console.log(res);
+
+      localStorage.removeItem("so-cart");
+      window.location.href = "./success.html";
     } catch (err) {
       console.log(err.message);
     }

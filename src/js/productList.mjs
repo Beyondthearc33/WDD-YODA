@@ -22,13 +22,12 @@ export default async function productList(selector, category) {
     const products = await getProductsByCategory(category);
 
     // render out the product list to the element
-    renderList(products, element);
-
+    renderList(products, element, productCardTemplate);
 }
-function renderList(productList, element) {
-    const html = productList.map(productCardTemplate).join("");
+
+// Reusable renderList
+function renderList(productList, element, templateFn) {
+    const html = productList.map(templateFn).join("");
     element.innerHTML = html;
-}
+};
 
-
-    
